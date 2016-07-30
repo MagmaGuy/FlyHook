@@ -213,14 +213,11 @@ public final class FlyHook  extends JavaPlugin implements Listener{
         
         Entity potentialDragon  = event.getEntity();
         
-        getLogger().log(Level.INFO, "Projectile shot entity: {0}", potentialDragon);
-        
         if((event.getEntityType().equals(EntityType.ENDER_DRAGON)))
         {
             
             LivingEntity dragonLivingEntity = (LivingEntity) potentialDragon;
-            
-            getLogger().info("Projectile hit a dragon");
+
             
             if(dragonLivingEntity.getPassenger() != null)
             {
