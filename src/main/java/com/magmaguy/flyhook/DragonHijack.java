@@ -1,9 +1,6 @@
 package com.magmaguy.flyhook;
 
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.EntityType;
-import org.bukkit.entity.LivingEntity;
-import org.bukkit.entity.Player;
+import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
@@ -26,10 +23,43 @@ public class DragonHijack implements Listener{
 
     }
 
-    //Allow players to mount an enderdragon if they have a fishing hook
+
     @EventHandler
     public void dragonHijack(EntityDamageByEntityEvent event){
 
+
+        //apply critical damage and dismount
+        if(event.getEntityType().equals(EntityType.ENDER_DRAGON) && event.getDamager() instanceof Player
+                || event.getEntityType().equals(EntityType.ENDER_DRAGON) && event.getDamager() instanceof Arrow)
+        {
+
+            LivingEntity dragonLivingEntity = (LivingEntity) event.getEntity();
+
+            if (event.getDamager() instanceof Player || ((Arrow)event.getDamager()).getShooter() instanceof Player)
+            {
+
+                if(dragonLivingEntity.getPassengers().size() > 0)
+                {
+
+                    double critBonus = event.getDamage() * 4;
+                    dragonLivingEntity.damage(critBonus);
+
+                    Player player = (Player) event.getEntity().getPassengers().get(0);
+
+                    String subtitle = "§4Hijack crit, " + critBonus + " damage!";
+
+                    player.sendTitle("", subtitle);
+
+                    dragonLivingEntity.removePassenger(player);
+                    player.setGliding(true);
+
+                }
+
+            }
+
+        }
+
+        //mount the dragon
         if(event.getDamager() instanceof Player)
         {
             Player player = (Player) event.getDamager();
@@ -46,38 +76,6 @@ public class DragonHijack implements Listener{
                     dragonEntity.setPassenger(player);
 
                 }
-
-            }
-
-        }
-
-    }
-
-    @EventHandler
-    public void damageCrits(EntityDamageEvent event){
-
-        Entity entity  = event.getEntity();
-
-        if((event.getEntityType().equals(EntityType.ENDER_DRAGON)))
-        {
-
-            LivingEntity dragonLivingEntity = (LivingEntity) entity;
-
-
-            if(dragonLivingEntity.getPassengers() != null)
-            {
-
-                double critBonus = event.getDamage() * 4;
-                dragonLivingEntity.damage(critBonus);
-
-                Player player = (Player) entity.getPassengers();
-
-                String subtitle = "§4Dragon crit! " + critBonus + " damage!";
-
-                player.sendTitle("", subtitle);
-
-                dragonLivingEntity.removePassenger(player);
-                player.setGliding(true);
 
             }
 
