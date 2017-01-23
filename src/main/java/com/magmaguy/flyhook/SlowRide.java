@@ -12,12 +12,11 @@ import static org.bukkit.Bukkit.getLogger;
 /**
  * Created by MagmaGuy on 23/01/2017.
  */
-public class SlowRide implements Listener{
+public class SlowRide implements Listener {
 
     private FlyHook plugin;
 
-    public SlowRide (Plugin plugin)
-    {
+    public SlowRide(Plugin plugin) {
 
         this.plugin = (FlyHook) plugin;
 
@@ -26,36 +25,28 @@ public class SlowRide implements Listener{
     private int processID;
 
     @EventHandler
-    public void slowRide (PlayerToggleSneakEvent event)
-    {
+    public void slowRide(PlayerToggleSneakEvent event) {
 
         Player player = event.getPlayer();
 
-        if (player.isGliding())
-        {
+        if (player.isGliding()) {
 
-            new BukkitRunnable()
-            {
+            new BukkitRunnable() {
 
                 int counter;
 
                 @Override
                 public void run() {
 
-                    if (player.isValid())
-                    {
+                    if (player.isValid()) {
 
                         player.setVelocity(player.getVelocity().multiply(0.5));
 
                         counter++;
 
-                        getLogger().info("" + counter);
-
-                        if (counter == 20 * 2)
-                        {
+                        if (counter == 20 * 2) {
 
                             this.cancel();
-                            getLogger().info("cancelling" + counter);
 
                         }
 

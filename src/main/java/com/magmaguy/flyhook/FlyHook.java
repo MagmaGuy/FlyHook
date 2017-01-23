@@ -4,12 +4,12 @@ import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 
 
-public final class FlyHook  extends JavaPlugin implements Listener{
+public final class FlyHook extends JavaPlugin implements Listener {
 
     //Determine behaviour on startup
     @Override
-    public void onEnable(){
-        
+    public void onEnable() {
+
         getLogger().info("FlyHook - enabled!");
 
         //Load settings from config
@@ -22,36 +22,32 @@ public final class FlyHook  extends JavaPlugin implements Listener{
         this.getServer().getPluginManager().registerEvents(new HookHandler(this), this);
 
         //Config-based listeners
-        if (getConfig().getBoolean("Flying 2x critical hits") == true)
-        {
+        if (getConfig().getBoolean("Flying 2x critical hits") == true) {
             this.getServer().getPluginManager().registerEvents(new FlyingCrits(this), this);
         }
-        if (getConfig().getBoolean("Dragon hijacking") == true)
-        {
+        if (getConfig().getBoolean("Dragon hijacking") == true) {
             this.getServer().getPluginManager().registerEvents(new DragonHijack(this), this);
         }
-        if(getConfig().getBoolean("Slow elytra flight by sneaking"))
-        {
+        if (getConfig().getBoolean("Slow elytra flight by sneaking")) {
             this.getServer().getPluginManager().registerEvents(new SlowRide(this), this);
         }
 
-        
+
     }
-    
+
     //Determine behaviour on shutdown
     @Override
-    public void onDisable(){
-        
+    public void onDisable() {
+
         getLogger().info("FlyHook - shutting down!");
-        
-    }
-    
-    public void FlyHook(){
 
     }
 
-    public void loadConfiguration()
-    {
+    public void FlyHook() {
+
+    }
+
+    public void loadConfiguration() {
 
         //check defaults
         getConfig().addDefault("Flying 2x critical hits", true);
@@ -64,13 +60,12 @@ public final class FlyHook  extends JavaPlugin implements Listener{
 
     }
 
-    public void reloadConfiguration()
-    {
+    public void reloadConfiguration() {
 
         reloadConfig();
 
         getLogger().info("FlyHook config reloaded!");
 
     }
-    
+
 }
